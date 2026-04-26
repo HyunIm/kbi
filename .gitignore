@@ -1,0 +1,4 @@
+node_modules/
+dist/
+venv_pdf/
+.DS_Store
