@@ -22,8 +22,12 @@ export const QuizEngine: React.FC = () => {
     switch (mode) {
       case 'WEEKLY':
         if (selectedSubOption) {
-          // selectedSubOption is like "1주차"
-          questions = dummyData.filter(q => q.category === '주차평가' && q.source.includes(selectedSubOption));
+          if (selectedSubOption === 'ALL') {
+            questions = dummyData.filter(q => q.category === '주차평가');
+          } else {
+            // selectedSubOption is like "1주차"
+            questions = dummyData.filter(q => q.category === '주차평가' && q.source === `${selectedSubOption} 진행평가`);
+          }
         }
         break;
       case 'EVAL1':
@@ -60,15 +64,27 @@ export const QuizEngine: React.FC = () => {
         </header>
         <main className="flex-1 p-6 max-w-2xl mx-auto w-full">
           <div className="space-y-3">
-            {mode === 'WEEKLY' && [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(week => (
-              <button 
-                key={week}
-                onClick={() => setSelectedSubOption(`${week}주차`)}
-                className="w-full text-left p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-700 font-semibold"
-              >
-                {week}주차 학습하기
-              </button>
-            ))}
+            {mode === 'WEEKLY' && (
+              <>
+                <button 
+                  onClick={() => setSelectedSubOption('ALL')}
+                  className="w-full text-left p-4 bg-white rounded-xl shadow-sm border border-blue-300 hover:border-blue-500 hover:bg-blue-50 text-blue-700 font-bold mb-4"
+                >
+                  1~12주차 전체 학습하기
+                </button>
+                <div className="grid grid-cols-2 gap-3">
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(week => (
+                    <button 
+                      key={week}
+                      onClick={() => setSelectedSubOption(`${week}주차`)}
+                      className="w-full text-left p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-700 font-semibold"
+                    >
+                      {week}주차
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
             {mode === 'EVAL1' && ['1차평가', '2차평가'].map(evalMode => (
               <button 
                 key={evalMode}
