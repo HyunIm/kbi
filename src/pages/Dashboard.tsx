@@ -40,9 +40,9 @@ export const Dashboard: React.FC = () => {
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-6 -mt-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
+
           {/* Card 1 */}
-          <button 
+          <button
             onClick={() => handleStartQuiz('WEEKLY')}
             className="group flex flex-col text-left bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-300 transition-all"
           >
@@ -54,7 +54,7 @@ export const Dashboard: React.FC = () => {
           </button>
 
           {/* Card 2 */}
-          <button 
+          <button
             onClick={() => handleStartQuiz('EVAL1')}
             className="group flex flex-col text-left bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-300 transition-all"
           >
@@ -62,11 +62,11 @@ export const Dashboard: React.FC = () => {
               <Target size={24} />
             </div>
             <h3 className="text-xl font-bold text-slate-800 mb-2">평가별 모의고사</h3>
-            <p className="text-slate-500 text-sm">1차 또는 2차 평가 대비 실전 모의고사를 진행합니다. (시험형)</p>
+            <p className="text-slate-500 text-sm">1차 또는 2차 평가 대비 실전 모의고사를 진행합니다. (학습형)</p>
           </button>
 
           {/* Card 3 */}
-          <button 
+          <button
             onClick={() => handleStartQuiz('RANDOM')}
             className="group flex flex-col text-left bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-blue-300 transition-all"
           >
@@ -79,7 +79,7 @@ export const Dashboard: React.FC = () => {
 
           {/* Card 4 - Wrong Answers */}
           <div className="relative group bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-red-300 transition-all flex flex-col text-left">
-            <button 
+            <button
               onClick={() => handleStartQuiz('WRONG_NOTES')}
               disabled={wrongAnswersCount === 0}
               className="flex-1 w-full text-left focus:outline-none disabled:opacity-60"
@@ -90,9 +90,9 @@ export const Dashboard: React.FC = () => {
               <h3 className="text-xl font-bold text-slate-800 mb-2">오답 노트 풀이</h3>
               <p className="text-slate-500 text-sm">틀렸던 문제를 다시 풀어보며 약점을 보완합니다. 현재 {wrongAnswersCount}문제가 저장되어 있습니다. (학습형)</p>
             </button>
-            
+
             {wrongAnswersCount > 0 && (
-              <button 
+              <button
                 onClick={handleClearWrongAnswers}
                 className="absolute top-6 right-6 p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
                 title="오답 노트 초기화"
