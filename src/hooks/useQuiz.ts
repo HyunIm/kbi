@@ -52,16 +52,27 @@ export const useQuiz = (initialQuestions: Question[]) => {
   };
 
   const saveWrongAnswersToStorage = () => {
-    if (state.wrongAnswers.length > 0) {
-      const existing = localStorage.getItem(WRONG_ANSWERS_KEY);
-      const existingArray: Question[] = existing ? JSON.parse(existing) : [];
-      
-      // Deduplicate
-      const newArray = [...existingArray, ...state.wrongAnswers];
-      const unique = newArray.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
-      
-      localStorage.setItem(WRONG_ANSWERS_KEY, JSON.stringify(unique));
-    }
+    const existing = localStorage.getItem(WRONG_ANSWERS_KEY);
+    const existingArray: Question[] = existing ? JSON.parse(existing) : [];
+    
+    // 이번 세션에서 푼 문제들의 ID
+    const answeredQuestionIds = Object.keys(state.userAnswers);
+    
+    // 이번 세션에서 맞춘 문제 ID (푼 문제 중 틀린 문제에 없는 ID)
+    const correctlyAnsweredIds = answeredQuestionIds.filter(
+      id => !state.wrongAnswers.some(q => q.id === id)
+    );
+
+    // 기존 오답 목록에서 이번에 맞춘 문제 제거
+    let newArray = existingArray.filter(q => !correctlyAnsweredIds.includes(q.id));
+    
+    // 이번에 틀린 문제 추가
+    newArray = [...newArray, ...state.wrongAnswers];
+    
+    // 중복 제거
+    const unique = newArray.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
+    
+    localStorage.setItem(WRONG_ANSWERS_KEY, JSON.stringify(unique));
   };
 
   // Save when finished
